@@ -21,9 +21,15 @@ displayBoard();
 console.log("type `go()` to play.");
 
 function insertCharacter() {
-  let character = prompt("Enter X or O:");
-  let row = prompt("Enter row number (0, 1, 2):");
-  let column = prompt("Enter col number (0, 1, 2): ");
+  let character = promptForCharacter();
+  let row = promptForRow();
+  let column = promptForColumn();
+
+  // Check if the cell is already occupied
+  if (board[row][column] !== "_") {
+    alert("Cell is already occupied. Please choose another cell.");
+    return insertCharacter(); // Re-run the entire function if the cell is occupied
+  }
 
   board[row][column] = character;
 
@@ -87,4 +93,31 @@ function checkWinner() {
   }
 
   return null; // No winner or tie
+}
+
+function promptForCharacter() {
+  let character = prompt("Enter the character (X/O):");
+  if (character !== "X" && character !== "O") {
+    alert("Invalid character. Please enter 'X' or 'O'.");
+    return promptForCharacter(); // Recursively re-prompt if invalid
+  }
+  return character;
+}
+
+function promptForRow() {
+  let row = prompt("Enter the row number (0, 1, 2):");
+  if (isNaN(row) || row < 0 || row > 2) {
+    alert("Invalid row. Please enter a number between 0 and 2.");
+    return promptForRow(); // Recursively re-prompt if invalid
+  }
+  return row;
+}
+
+function promptForColumn() {
+  let column = prompt("Enter the column number (0, 1, 2):");
+  if (isNaN(column) || column < 0 || column > 2) {
+    alert("Invalid column. Please enter a number between 0 and 2.");
+    return promptForColumn(); // Recursively re-prompt if invalid
+  }
+  return column;
 }
