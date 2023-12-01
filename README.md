@@ -2,67 +2,102 @@
 
 ## author: Ryan Morales
 
-### Step-2 Instructions
+### Step-3 Instructions
 
-1. You will be carrying over your `myGame.js` file from step 1.
+1. You will be carrying over your `myGame.js` file from step 2.
 
 In order to bring over this file run the following commands:
 
-`git checkout step-1 -- myGame.js`
+`git checkout step-2 -- myGame.js`
 
-2. Compare your `myGame.js` script to the `step1script.js` to make sure you're on the right track.
+2. Compare your `myGame.js` script to the `step2script.js` to make sure you're on the right track.
 
 3. Follow the next steps to add to your `myGame.js` script.
 
-4. Add console logs to the display board function to show the column number and a footer log to separate the end of the last board display with a message the user can see to know when to type go().
+### Check for a winner
 
-- also pass in the index parameter to the forEach method concatenate a row message with the index of each row for visual clarity.
+1. implement the following check winner function
 
 ```js
-function displayBoard() {
-  console.log("  c:0, c:1, c:2");
-  board.forEach((row, index) => {
-    console.log("r " + index + ": " + row.join(" | "));
-  });
-  console.log("*********type `go()` to play***********");
+function checkWinner() {
+  // Check rows and columns
+  for (let i = 0; i < 3; i++) {
+    if (
+      board[i][0] === board[i][1] &&
+      board[i][1] === board[i][2] &&
+      board[i][0] !== "_"
+    ) {
+      return board[i][0];
+    }
+    if (
+      board[0][i] === board[1][i] &&
+      board[1][i] === board[2][i] &&
+      board[0][i] !== "_"
+    ) {
+      return board[0][i];
+    }
+  }
+
+  // Check diagonals
+  if (
+    board[0][0] === board[1][1] &&
+    board[1][1] === board[2][2] &&
+    board[0][0] !== "_"
+  ) {
+    return board[0][0];
+  }
+  if (
+    board[0][2] === board[1][1] &&
+    board[1][1] === board[2][0] &&
+    board[0][2] !== "_"
+  ) {
+    return board[0][2];
+  }
+
+  // Check for tie (no empty cells)
+  if (board.every((row) => row.every((cell) => cell !== "_"))) {
+    return "Tie";
+  }
+
+  return null; // No winner or tie
 }
 ```
 
-5. Create an insertCharacter() function that takes three prompts for the character, row and column you want the player to insert, utilizing a string message for what the user should do. Assign these prompts to variable names character, row and column.
-
-- Then manipulate the board using indexing by passing the [row] and [column] variables.
-- Finally, call the displayBoard() function to write out the user selection to the console.
+2. Insert this code inside insertCharacter() function above displayBoard()
 
 ```js
-function insertCharacter() {
-  let character = prompt("Enter X or O:");
-  let row = prompt("Enter row number (0, 1, 2):");
-  let column = prompt("Enter col number (0, 1, 2): ");
 
-  board[row][column] = character;
+// function insertCharacter() {
 
-  displayBoard();
+//board[row][column] = character;
+let winner = checkWinner();
+if (winner) {
+  if (winner === "Tie") {
+    console.log("It's a tie!");
+  } else {
+    console.log(winner + " wins!");
+  }
+  // reset the board
+  board = [
+    ["_", "_", "_"],
+    ["_", "_", "_"],
+    ["_", "_", "_"],
+  ];
+ 
 }
+//displayBoard();
+// }
 ```
 
-6. Make sure to log the message to the user to use `go()` to play the game for the first time the script loads.
+#### How It Works
 
-```js
-console.log("type `go()` to play.");
-```
-
-7. Create a go() function that allows the user to easily call the insertCharacter() function.
-
-```js
-function go() {
-  insertCharacter();
-}
-```
-8. Paste your code into the snippet and run `ctrl + s` and `ctrl + enter` to run the program.
-
-9. type `go()` in the console to play the game. A pop up window should open prompting you to enter X/O and a row and column number.
+After each move, checkWinner is called.
+It checks for three-in-a-row in each row, each column, and both diagonals.
+If a winner is found, it returns the winning character ('X' or 'O').
+If there are no empty cells left and no winner, it returns 'Tie'.
+Otherwise, it returns null, indicating the game should continue.
 
 Finally, Run 
 > `git add myGame.js`
-> `git commit -m "finished myGame.js step-2`
-> `git checkout step-3`
+> `git commit -m "finished myGame.js step-3`
+> `git checkout step-4`
