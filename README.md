@@ -68,4 +68,4 @@ let character = promptForCharacter();
 Finally, Run 
 > `git add myGame.js`
 > `git commit -m "finished myGame.js step-4`
-> `git checkout step-4`
+> `git checkout step-5`
