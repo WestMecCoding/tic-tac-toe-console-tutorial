@@ -2,51 +2,67 @@
 
 ## author: Ryan Morales
 
-### Step-1 Instructions
+### Step-2 Instructions
 
-You will be writing your code into the `myGame.js` file.
+1. You will be carrying over your `myGame.js` file from step 1.
 
-Once you have followed the following steps you will copy the code into the Chrome Dev Tools >> Sources >> Snippets
-to make sure it's working correctly.
+In order to bring over this file run the following commands:
 
-1. Initialize the array that will hold our game board. It will be a multi-dimensional array of three rows with three colmuns each assigned to a string value of an underscore as a place value.
+`git checkout step-1 -- myGame.js`
 
-```js
-let board = [
-  ["_", "_", "_"],
-  ["_", "_", "_"],
-  ["_", "_", "_"],
-];
-```
+2. Compare your `myGame.js` script to the `step1script.js` to make sure you're on the right track.
 
-2. We need a function to display the board to the console. This function will use the forEach method to log each row of our board. We will use the join() method to place a vertical pipe "|" between each column of the rows. We will also log a line break character so all rows get printed to the console.
+3. Follow the next steps to add to your `myGame.js` script.
+
+4. Add console logs to the display board function to show the column number and a footer log to separate the end of the last board display with a message the user can see to know when to type go().
+
+- also pass in the index parameter to the forEach method concatenate a row message with the index of each row for visual clarity.
 
 ```js
 function displayBoard() {
-  board.forEach((row) => {
-    console.log(row.join("|"));
-    console.log("\n");
+  console.log("  c:0, c:1, c:2");
+  board.forEach((row, index) => {
+    console.log("r " + index + ": " + row.join(" | "));
   });
+  console.log("*********type `go()` to play***********");
 }
 ```
 
-3. We will display the board to the console by calling the function at the bottom of the script.
+5. Create an insertCharacter() function that takes three prompts for the character, row and column you want the player to insert, utilizing a string message for what the user should do. Assign these prompts to variable names character, row and column.
+
+- Then manipulate the board using indexing by passing the [row] and [column] variables.
+- Finally, call the displayBoard() function to write out the user selection to the console.
 
 ```js
-displayBoard();
+function insertCharacter() {
+  let character = prompt("Enter X or O:");
+  let row = prompt("Enter row number (0, 1, 2):");
+  let column = prompt("Enter col number (0, 1, 2): ");
+
+  board[row][column] = character;
+
+  displayBoard();
+}
 ```
 
-4. Test your code in the browser snippets by pasting your completed code and running `ctrl+s` then `ctrl+enter`, the expected output should look like this
-```console
-_|_|_
+6. Make sure to log the message to the user to use `go()` to play the game for the first time the script loads.
 
-_|_|_
-
-_|_|_
--> undefined
+```js
+console.log("type `go()` to play.");
 ```
-5. If your code does not work as expected run the following steps to see what the code should look like and continue on to the nekxt step.
 
+7. Create a go() function that allows the user to easily call the insertCharacter() function.
+
+```js
+function go() {
+  insertCharacter();
+}
+```
+8. Paste your code into the snippet and run `ctrl + s` and `ctrl + enter` to run the program.
+
+9. type `go()` in the console to play the game. A pop up window should open prompting you to enter X/O and a row and column number.
+
+Finally, Run 
 > `git add myGame.js`
-> `git commit -m "finished myGame.js step-1`
-> `git checkout step-2`
+> `git commit -m "finished myGame.js step-2`
+> `git checkout step-3`
